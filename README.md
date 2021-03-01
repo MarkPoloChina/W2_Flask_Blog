@@ -6,6 +6,8 @@
 
 - 基于Flask框架 Mysql数据库
 
+- 注意！Mysql未整合，不能直接调用
+
 - 包含开源组件 dplayer
 
 - Flask_Blog V1.0 2021.1.26-2021.2.26
