@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Blog_Index</title>
+    <link rel="shortcut icon" href="#" />
+    <link href="/static/css/main.css" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="title">
+        FLASK_BLOG
+      </div>
+      <div class="index_director">
+        <a href="{{ url_for('index') }}">首页</a>
+        <div class="sendpost_btn">
+          <a href="{{url_for('sendpost', username=current_user.username)}}">发博客</a>
+        </div>
+        {% if current_user.username == 'admin' %}
+        <a class="acc_btn" href="{{ url_for('acc') }}">控制中心</a>
+        {% endif %}
+      </div>
+      <div class="user_director">
+        {% if current_user.is_anonymous %}
+        <a class="login" href="{{ url_for('login') }}">登录</a>
+        <a class="reg" href="{{ url_for('register') }}">注册</a>
+        {% else %}
+        <img class="header_pp" src="/static/PP/{{ current_user.id }}.jpg" onerror="javascript:this.src='{{ current_user.avatar(36) }}';">
+        <a class="user" href="{{ url_for('user', username=current_user.username) }}">用户中心</a>
+        <a class="exit" href="{{ url_for('logout') }}">退出</a>
+        {% endif %}
+      </div>
+    </header>
+    <div class="holder">
+      <div class="hello">
+        {% if current_user.is_anonymous %}
+        <h1>Hello, 更多精彩内容和功能请先登录</h1>
+        {% else %}
+        <h1>Hello, {{ current_user.username }}!</h1>
+        {% endif %}
+      </div>
+      <div class="post_list">
+        {% for post in posts %}
+        <div class="sig_line">
+          <div class="pp_area">
+            <img class="pp4" src="/static/PP/{{ post.user_id }}.jpg" onerror="javascript:this.src='{{ post.author.avatar(36) }}';">
+          </div>
+          <div class="word_area">
+            <div class="username_data">
+              <div class="username">
+                {{ post.author.username }}
+              </div>
+              <div class="post_time">
+                {{ post.timestamp }}
+              </div>
+            </div>
+            <div class="post_title">
+              <a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ur>
+            {% for message in messages %}
+              <li>{{ message }}</li>>
+            {% endfor %}
+          </ur>
+        {% endif %}
+      {% endwith %}
+    </div>
+    <div class="end">
+      <h3>仅用于西二Py组三轮Flask_Blog项目考核<br>2021/1/26 - 2021/2/26<br> © By Mark·Polo</h3>
+    </div>
+  </body>
+</html>

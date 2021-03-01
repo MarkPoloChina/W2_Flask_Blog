@@ -1,0 +1,212 @@
+body{
+    background-color: whitesmoke;
+}
+.pp{
+    width: 36px;
+    height: 36px;
+}
+.pp2{
+    width: 72px;
+    height: 72px;
+}
+/* pp3 used for  */
+.pp3{
+    width: 100px;
+    height: 100px;
+}
+.pp4{
+    width: 50px;
+    height: 50px;
+}
+.pp5{
+    width: 180px;
+    height: 180px;
+}
+.pp6{
+    width: 25px;
+    height: 25px;
+}
+.header_pp{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid gray;
+    margin-right: 10px;
+}
+header{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: white;
+    position: fixed;
+    width: 99%;
+    border: 2px solid black;
+    border-radius: 6px;
+    z-index:99999;
+}
+.title{
+    font-size: x-large;
+    color:dimgray;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.index_director{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 3px;
+}
+.index_director>a{
+    color: gray;
+    margin-right: 10px;
+}
+header>div{
+    display: inline-block;
+}
+.sendpost_btn{
+    display: inline-block;
+    padding-right: 10px;
+}
+.sendpost_btn>a{
+    color: cadetblue;
+}
+.acc_btn{
+    color: #607c85 !important;
+}
+.user_director{
+    float: right;
+    margin-right: 30px;
+    margin-top: 2px;
+}
+.login{
+    color: cornflowerblue;
+}
+.reg{
+    color: cornflowerblue;
+}
+.user{
+    color: cornflowerblue;
+    margin-right: 10px;
+}
+.exit{
+    color: darkred;
+}
+.hello
+{
+    padding-left: 30px;
+    padding-top: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background: url(/static/img/header.jpg);
+    background-size: cover;
+    color: white;
+    padding-bottom: 1px;
+}
+.holder{
+    margin-left: 200px;
+    margin-right: 200px;
+    background-color: white;
+}
+.post_list{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.pp_area{
+    display: inline-block;
+}
+.word_area{
+    display: inline-block;
+}
+.sig_line{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(105, 105, 105, 0.26);
+}
+.username{
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100px;
+    color: dimgray;
+}
+.post_time{
+    display: inline-block;
+    color: dimgray;
+    width: 200px;
+}
+.post_title>a{
+    color: steelblue;
+    font-size: larger;
+}
+.post_title{
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.user_profile_pp{
+    display: inline-block;
+    margin-right: 20px;
+}
+.user_profile_word{
+    display: inline-block;
+}
+.user_profile{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+}
+.list_title{
+    margin-right: 20px;
+    margin-left: 20px;
+    font-size: x-large
+}
+.action_time{
+    display: inline-block;
+    color: dimgray;
+}
+#submit{
+    width: 60px;
+    height: 30px;
+}
+.edit_pp>img{
+    display: block;
+    padding-bottom: 10px;
+}
+.edit_pp{
+    display: inline-block;
+}
+.edit_word{
+    display: inline-block;
+}
+.edit_word>p{
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+.edit_p_form{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+}
+.change_pw{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.change_pw_form{
+    display: inline-block;
+    margin-left: 30px;
+}
+.change_pw_pp{
+    margin-left: 20px;
+}
+.login_form{
+    margin-left: 20px;
+    padding-bottom: 50px;
+}
+.reg_form{
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-bottom: 30px;
+}
+.end{
+    text-align: center;
+    margin-top: 250px;
+    color: dimgray;
+}

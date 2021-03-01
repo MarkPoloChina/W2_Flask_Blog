@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Blog_Post</title>
+    <link rel="shortcut icon" href="#" />
+    <link href="/static/css/main.css" rel="stylesheet">
+    <link href="/static/css/post.css" rel="stylesheet">
+    <script src="{{ url_for('static',filename='js/DPlayer.min.js') }}"></script>
+  </head>
+  <body>
+    <header>
+      <div class="title">
+        FLASK_BLOG
+      </div>
+      <div class="index_director">
+        <a href="{{ url_for('index') }}">首页</a>
+        <div class="sendpost_btn">
+          <a href="{{url_for('sendpost', username=current_user.username)}}">发博客</a>
+        </div>
+        {% if current_user.username == 'admin' %}
+        <a class="acc_btn" href="{{ url_for('acc') }}">控制中心</a>
+        {% endif %}
+      </div>
+      <div class="user_director">
+        {% if current_user.is_anonymous %}
+        <a class="login" href="{{ url_for('login') }}">登录</a>
+        <a class="reg" href="{{ url_for('register') }}">注册</a>
+        {% else %}
+        <img class="header_pp" src="/static/PP/{{ current_user.id }}.jpg" onerror="javascript:this.src='{{ current_user.avatar(36) }}';">
+        <a class="user" href="{{ url_for('user', username=current_user.username) }}">用户中心</a>
+        <a class="exit" href="{{ url_for('logout') }}">退出</a>
+        {% endif %}
+      </div>
+    </header>
+    <div class="holder">
+      <div class="hello">
+        {% if current_user.is_anonymous %}
+        <h1>Hello, 更多精彩内容和功能请先登录</h1>
+        {% else %}
+        <h1>Hello, {{ current_user.username }}!</h1>
+        {% endif %}
+      </div>
+      <div class="post_area">
+        <div class="post_header" style="background-image: url(/static/PC/{{ post.id }}.jpg); background-size: cover;  ">
+          <div class="header_title">
+            <a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
+          </div>
+          <div class="header_info">
+            <img class="pp6" src="/static/PP/{{ post.user_id }}.jpg" onerror="javascript:this.src='{{ post.author.avatar(36) }}';">
+            {{ post.author.username }}  {{ post.timestamp }} 标签：{% for tag in tags %} {{ tag.body+' ' }} {% endfor %} 点赞数：{{ liked_cnt }}  收藏数：{{ collected_cnt }}
+            {% if post.user_id == current_user.id %}
+            <a href="{{ url_for('deletepost', post_id=post.id) }}">
+              <input value="删除博客" type=button>
+            </a>
+            <a href="{{ url_for('editpost', post_id=post.id) }}">
+              <input value="编辑博客" type=button>
+            </a>
+            {% endif %}
+            {% if current_user.is_anonymous %}
+            <a href="{{ url_for('login') }}">
+              <input value="点赞博客" type=button>
+            </a>
+            {% elif isLiked %}
+            <a href="{{ url_for('dislikepost',post_id=post.id,user_id=current_user.id) }}">
+              <input value="取消点赞" type=button>
+            </a>
+            {% else %}
+            <a href="{{ url_for('likepost',post_id=post.id,user_id=current_user.id) }}">
+              <input value="点赞博客" type=button>
+            </a>
+            {% endif %}
+            {% if current_user.is_anonymous %}
+            <a href="{{ url_for('login') }}">
+              <input value="收藏博客" type=button>
+            </a>
+            {% elif isCollected %}
+            <a href="{{ url_for('discollectpost',post_id=post.id,user_id=current_user.id) }}">
+              <input value="取消收藏" type=button>
+            </a>
+            {% else %}
+            <a href="{{ url_for('collectpost',post_id=post.id,user_id=current_user.id) }}">
+              <input value="收藏博客" type=button>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+        <div class="post_main">
+          {{ mdform.body }}
+          {{ pagedown.include_pagedown() }}
+        </div>
+        {% if post.video_id %}
+        <div id="dplayer" style="height: 500px;width: 774px"></div>
+        <script>
+          var dp1 = new DPlayer({
+              container: document.getElementById('dplayer'),
+              video: {
+                  url: "{{ url_for('static',filename='uploads/'+post.video_id) }}"
+              },
+              danmaku: {
+                    id: "{{ post.video_id }}",
+                    api: 'https://dplayer.moerats.com',
+                    user: "{{ current_user.username }}"
+                }
+          });
+        </script>
+        {% endif %}
+        <div class="post_comment_area">
+          <form action="" enctype='multipart/form-data' method="post">
+            {{ form.hidden_tag() }}
+            {{ form.csrf_token }}
+            {{ form.body.label }}<br>
+            {{ form.body }}
+            {{ form.submit()}}
+          </form>
+          <div class="post_comments">
+            {% for comment in comments %}
+            <div class="post_comment_sig">
+              <span class="post_comment_username">
+                {{ comment.author.username }}
+              </span>
+              <span class="post_comment_body">
+                {{ comment.body }}
+              </span>
+              {{ comment.timestamp }}
+              {% if not current_user.is_anonymous and comment.author.id == current_user.id %}
+              <a href="{{ url_for('delcomment',comment_id=comment.id,post_id=post.id) }}">
+                <input value="删除评论" type=button>
+              </a>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% with messages = get_flashed_messages() %}
+               {% if messages %}
+                <ur>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>>
+                    {% endfor %}
+                </ur>
+               {% endif %}
+            {% endwith %}
+      </div>
+    </div>
+  </body>
+</html>

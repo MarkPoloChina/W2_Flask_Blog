@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Blog_ChangePW</title>
+    <link rel="shortcut icon" href="#" />
+    <link href="/static/css/main.css" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="title">
+        FLASK_BLOG
+      </div>
+      <div class="index_director">
+        <a href="{{ url_for('index') }}">首页</a>
+        <div class="sendpost_btn">
+          <a href="{{url_for('sendpost', username=current_user.username)}}">发博客</a>
+        </div>
+        {% if current_user.username == 'admin' %}
+        <a class="acc_btn" href="{{ url_for('acc') }}">控制中心</a>
+        {% endif %}
+      </div>
+      <div class="user_director">
+        {% if current_user.is_anonymous %}
+        <a class="login" href="{{ url_for('login') }}">登录</a>
+        <a class="reg" href="{{ url_for('register') }}">注册</a>
+        {% else %}
+        <img class="header_pp" src="/static/PP/{{ current_user.id }}.jpg" onerror="javascript:this.src='{{ current_user.avatar(36) }}';">
+        <a class="user" href="{{ url_for('user', username=current_user.username) }}">用户中心</a>
+        <a class="exit" href="{{ url_for('logout') }}">退出</a>
+        {% endif %}
+      </div>
+    </header>
+    <div class="holder">
+      <div class="hello">
+        <h1>密 码 修 改</h1>
+      </div>
+      <div class="edit_pp change_pw_pp">
+        <img class="pp3" src="/static/PP/{{ user.id }}.jpg" onerror="javascript:this.src='{{ user.avatar(36) }}';">
+        <h2>User: {{ current_user.username }}</h2> 
+      </div>
+      <form class="change_pw_form" action="" enctype='multipart/form-data' method="post">
+          {{ form.hidden_tag() }}
+          <p>{{ form.ori_pw.label }}</p>
+          <p>{{ form.ori_pw }}</p>
+          <p>{{ form.new_pw.label }}</p>
+          <p>{{ form.new_pw }}</p>
+          <p>{{ form.re_pw.label }}</p>
+          <p>{{ form.re_pw }}</p>
+          <p>{{ form.submit() }}</p>
+      </form>
+      {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          <ur>
+              {% for message in messages %}
+                  <li>{{ message }}</li>>
+              {% endfor %}
+          </ur>
+          {% endif %}
+      {% endwith %}
+    </div>
+  </body>
+</html>

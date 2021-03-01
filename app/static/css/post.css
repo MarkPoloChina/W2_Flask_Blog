@@ -1,0 +1,59 @@
+.flask-pagedown{
+    display: none;
+}
+.post_area{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 30px;
+}
+.post_header{
+    height: 300px;
+    border-radius: 8px;
+    position:relative;
+}
+.header_title>a{
+    color: white;
+    font-size: xx-large;
+}
+.header_title{
+    background-color: rgba(153, 153, 153, 0.459);
+    position:absolute;
+    bottom:50px;
+    left: 20px;
+    right: 20px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.header_info{
+    background-color: rgba(153, 153, 153, 0.459);
+    position:absolute;
+    bottom:5px;
+    left: 20px;
+    right: 20px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: white;
+}
+.post_main{
+    background-color: rgb(253, 252, 244);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    padding-top: 5px;
+}
+.post_comment_area{
+    margin-top: 20px;
+}
+.post_comments{
+    margin-top: 20px;
+}
+.post_comment_body{
+    width: 500px;
+    display: inline-block;
+}
+.post_comment_username{
+    width: 100px;
+    display: inline-block;
+}

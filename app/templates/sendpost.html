@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Blog_SendPost</title>
+        <link href="/static/css/main.css" rel="stylesheet">
+        <link href="/static/css/sendpost.css" rel="stylesheet">
+        <link rel="shortcut icon" href="#" />
+    </head>
+    <body>
+        <header>
+            <div class="title">
+              FLASK_BLOG
+            </div>
+            <div class="index_director">
+              <a href="{{ url_for('index') }}">首页</a>
+              <div class="sendpost_btn">
+                <a href="{{url_for('sendpost', username=current_user.username)}}">发博客</a>
+              </div>
+              {% if current_user.username == 'admin' %}
+              <a class="acc_btn" href="{{ url_for('acc') }}">控制中心</a>
+              {% endif %}
+            </div>
+            <div class="user_director">
+              {% if current_user.is_anonymous %}
+              <a class="login" href="{{ url_for('login') }}">登录</a>
+              <a class="reg" href="{{ url_for('register') }}">注册</a>
+              {% else %}
+              <img class="header_pp" src="/static/PP/{{ current_user.id }}.jpg" onerror="javascript:this.src='{{ current_user.avatar(36) }}';">
+              <a class="user" href="{{ url_for('user', username=current_user.username) }}">用户中心</a>
+              <a class="exit" href="{{ url_for('logout') }}">退出</a>
+              {% endif %}
+            </div>
+        </header>
+        <div class="holder">
+            <div class="hello">
+                <h1>发 博 客</h1>
+            </div>
+            <form class="sendpost_form" action="" enctype='multipart/form-data' method="post">
+                {{ form.hidden_tag() }}
+                {{ form.csrf_token }}
+                {{ form.title.label }}<br>
+                {{ form.title() }}<br>
+                {{ form.tag.label }}<br>
+                {{ form.tag }}<br>
+                {{ form.body.label }}<br>
+                {{ form.body(cols=120, rows=20) }}
+                {{ pagedown.include_pagedown() }}
+                <div class="sendpost_other">
+                    <div>
+                        {{ form.video.label }}
+                        {{ form.video }}
+                    </div>
+                    <div>
+                        {{ form.cover.label }}
+                        {{ form.cover }}
+                    </div>
+                    <div class="submit_btn">
+                        {{ form.submit()}}
+                    </div>
+                </div>
+            </form>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ur>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>>
+                    {% endfor %}
+                </ur>
+                {% endif %}
+            {% endwith %}
+        </div>
+    </body>
+</html>

@@ -1,0 +1,19 @@
+.sendpost_form{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+}
+.flask-pagedown-preview{
+    border: 1px solid black;
+    width: 863px;
+    height: 304px;
+}
+.flask-pagedown>textarea{
+    resize: none;
+}
+.sendpost_other{
+    margin-top: 10px;
+}
+.sendpost_other>div{
+    margin-top: 10px;
+}

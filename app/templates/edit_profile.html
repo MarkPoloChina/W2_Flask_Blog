@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Blog_EditProfile</title>
+    <link rel="shortcut icon" href="#" />
+    <link href="/static/css/main.css" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="title">
+        FLASK_BLOG
+      </div>
+      <div class="index_director">
+        <a href="{{ url_for('index') }}">首页</a>
+        <div class="sendpost_btn">
+          <a href="{{url_for('sendpost', username=current_user.username)}}">发博客</a>
+        </div>
+        {% if current_user.username == 'admin' %}
+        <a class="acc_btn" href="{{ url_for('acc') }}">控制中心</a>
+        {% endif %}
+      </div>
+      <div class="user_director">
+        {% if current_user.is_anonymous %}
+        <a class="login" href="{{ url_for('login') }}">登录</a>
+        <a class="reg" href="{{ url_for('register') }}">注册</a>
+        {% else %}
+        <img class="header_pp" src="/static/PP/{{ current_user.id }}.jpg" onerror="javascript:this.src='{{ current_user.avatar(36) }}';">
+        <a class="user" href="{{ url_for('user', username=current_user.username) }}">用户中心</a>
+        <a class="exit" href="{{ url_for('logout') }}">退出</a>
+        {% endif %}
+      </div>
+    </header>
+    <div class="holder">
+      <div class="hello">
+        <h1>个 人 资 料 编 辑</h1>
+      </div>
+      <form class="edit_p_form" action="" enctype='multipart/form-data' method="post">
+        {{ form.hidden_tag() }}
+        <div class="edit_pp">
+          <img class="pp5" src="/static/PP/{{ user.id }}.jpg" onerror="javascript:this.src='{{ user.avatar(36) }}';">
+          {{ form.Profile_Pic(accept='.png,.jpg') }}
+        </div>
+        <div class="edit_word">
+          <p>
+            {{ form.username.label }}
+            {{ form.username(size=32) }}
+            {% for error in form.username.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          </p>
+          <p>
+            {{ form.about_me.label }}
+            {{ form.about_me(cols=50, rows=4) }}
+            {% for error in form.about_me.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          </p>
+        </div>
+        <p>{{ form.submit() }}</p>
+      </form>
+      <a class="change_pw" href="{{ url_for('changepw', user_id=current_user.id) }}">
+        <button>
+          修改密码
+        </button>
+      </a>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ur>
+            {% for message in messages %}
+              <li>{{ message }}</li>>
+            {% endfor %}
+          </ur>
+        {% endif %}
+      {% endwith %}
+    </div>
+  </body>
+</html>

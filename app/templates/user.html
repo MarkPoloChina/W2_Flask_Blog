@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="#" />
+        <title>Blog_User</title>
+        <link href="/static/css/main.css" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <div class="title">
+              FLASK_BLOG
+            </div>
+            <div class="index_director">
+              <a href="{{ url_for('index') }}">首页</a>
+              <div class="sendpost_btn">
+                <a href="{{url_for('sendpost', username=current_user.username)}}">发博客</a>
+              </div>
+              {% if current_user.username == 'admin' %}
+              <a class="acc_btn" href="{{ url_for('acc') }}">控制中心</a>
+              {% endif %}
+            </div>
+            <div class="user_director">
+              {% if current_user.is_anonymous %}
+              <a class="login" href="{{ url_for('login') }}">登录</a>
+              <a class="reg" href="{{ url_for('register') }}">注册</a>
+              {% else %}
+              <img class="header_pp" src="/static/PP/{{ current_user.id }}.jpg" onerror="javascript:this.src='{{ current_user.avatar(36) }}';">
+              <a class="user" href="{{ url_for('user', username=current_user.username) }}">用户中心</a>
+              <a class="exit" href="{{ url_for('logout') }}">退出</a>
+              {% endif %}
+            </div>
+        </header>
+        <div class="holder">
+            <div class="hello">
+                <h1>用 户 中 心</h1>
+            </div>
+            <div class="user_profile">
+                <div class="user_profile_pp">
+                    <img class="pp5" src="/static/PP/{{ user.id }}.jpg" onerror="javascript:this.src='{{ user.avatar(36) }}';">
+                </div>
+                <div class="user_profile_word">
+                    <h1>User: {{ user.username }}</h1>
+                    {% if user.about_me %}
+                    <p>个人简介： {{ user.about_me }}</p>
+                    {% endif %}
+                    {% if user.last_seen %}
+                    <p>最近登录： {{ user.last_seen }}</p>
+                    {% endif %}
+                    {% if user == current_user %}
+                    <p><a href="{{ url_for('edit_profile') }}">个人资料编辑</a></p>
+                    {% endif %}
+                </div>
+            </div>
+            <hr>
+            <div class="list_title">
+                {{ user.username }}发布的帖子：
+            </div>
+            <div class="post_list">
+                {% for post in posts %}
+                <div class="sig_line">
+                  <div class="pp_area">
+                    <img class="pp4" src="/static/PP/{{ user.id }}.jpg" onerror="javascript:this.src='{{ user.avatar(36) }}';">
+                  </div>
+                  <div class="word_area">
+                    <div class="username_data">
+                      <div class="username">
+                        {{ post.author.username }}
+                      </div>
+                      <div class="post_time">
+                        {{ post.timestamp }}
+                      </div>
+                    </div>
+                    <div class="post_title">
+                      <a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+            </div>
+            <hr>
+            <div class="list_title">
+                {{ user.username }}收藏的帖子：
+            </div>
+            <div class="post_list">
+                {% for collected_post in collected_posts %}
+                <div class="sig_line">
+                  <div class="pp_area">
+                    <img class="pp4" src="/static/PP/{{ collected_post.user_id }}.jpg" onerror="javascript:this.src='{{ collected_post.author.avatar(36) }}';">
+                  </div>
+                  <div class="word_area">
+                    <div class="username_data">
+                      <div class="username">
+                        {{ collected_post.author.username }}
+                      </div>
+                      <div class="post_time">
+                        {{ collected_post.timestamp }}
+                      </div>
+                      <div class="action_time">
+                        收藏于
+                        {{ collected_times[loop.index-1].timestamp }}
+                      </div>
+                    </div>
+                    <div class="post_title">
+                        <a href="{{ url_for('post', post_id=collected_post.id) }}">{{ collected_post.title }}</a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+            </div>
+            <hr>
+            <div class="list_title">
+                {{ user.username }}点赞的帖子：
+            </div>
+            <div class="post_list">
+                {% for liked_post in liked_posts %}
+                <div class="sig_line">
+                  <div class="pp_area">
+                    <img class="pp4" src="/static/PP/{{ liked_post.user_id }}.jpg" onerror="javascript:this.src='{{ liked_post.author.avatar(36) }}';">
+                  </div>
+                  <div class="word_area">
+                    <div class="username_data">
+                      <div class="username">
+                        {{ liked_post.author.username }}
+                      </div>
+                      <div class="post_time">
+                        {{ liked_post.timestamp }}
+                      </div>
+                      <div class="action_time">
+                        点赞于
+                        {{ liked_times[loop.index-1].timestamp }}
+                      </div>
+                    </div>
+                    <div class="post_title">
+                        <a href="{{ url_for('post', post_id=liked_post.id) }}">{{ liked_post.title }}</a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% with messages = get_flashed_messages() %}
+               {% if messages %}
+                <ur>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>>
+                    {% endfor %}
+                </ur>
+               {% endif %}
+            {% endwith %}
+        </div>
+    </body>
+</html>
