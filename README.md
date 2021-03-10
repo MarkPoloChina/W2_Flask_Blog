@@ -14,6 +14,9 @@
 
 - © Mark Polo
 
+## 依赖相关
+    pip install flask flask_sqlalchemy flask_migrate flask_login flask_pagedown flask_wtf email_validator pymysql
+
 ## 用法&功能
 
 - 创建账号，登录账户，注销账号，登录保持
